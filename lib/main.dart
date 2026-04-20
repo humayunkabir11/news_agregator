@@ -18,7 +18,7 @@ void main() async {
     () async {
       WidgetsFlutterBinding.ensureInitialized();
       await Hive.initFlutter();
-      await initDependencies(); // ✅ VERY IMPORTANT
+      await initDependencies(); //  VERY IMPORTANT
 
       /// ------------- device orientation/ (off rotation)--------
       await SystemChrome.setPreferredOrientations([

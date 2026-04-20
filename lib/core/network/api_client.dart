@@ -1,12 +1,12 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
-import 'interceptors/log_interceptor.dart';
+
 import 'interceptors/retry_interceptor.dart';
-import 'interceptors/auth_interceptor.dart';
+
 
 class ApiClient {
   late final Dio dio;
-  late final AppAuthInterceptor authInterceptor;
+  // late final AppAuthInterceptor authInterceptor;
 
   ApiClient({
     required String baseUrl,
@@ -22,17 +22,12 @@ class ApiClient {
       ),
     );
 
-    /// Auth Interceptor
-    authInterceptor = AppAuthInterceptor(
-      getToken: getToken,
-      onLogout: onLogout,
-    );
 
     /// Interceptors Order (VERY IMPORTANT)
     dio.interceptors.addAll([
-      AppLogInterceptor(),
+
       AppRetryInterceptor(dio: dio),
-      authInterceptor,
+
     ]);
   }
 

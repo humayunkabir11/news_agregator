@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import '../../../features/main/presentation/pages/main_page.dart';
 import '../../../features/news/presentation/pages/news_page.dart';
 import '../../../features/news/presentation/pages/article_detail_page.dart';
 import '../../../features/news/domain/entities/article_entity.dart';

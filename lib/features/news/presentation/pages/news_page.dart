@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -19,6 +20,8 @@ class NewsPage extends StatefulWidget {
 
 class _NewsPageState extends State<NewsPage> {
   final TextEditingController _searchController = TextEditingController();
+  final ScrollController _scrollController = ScrollController();
+  Timer? _debounce;
   final List<String> _categories = ['general', 'business', 'technology', 'sports', 'health', 'science', 'entertainment'];
   String _selectedCategory = 'general';
 
@@ -29,24 +32,36 @@ class _NewsPageState extends State<NewsPage> {
   }
 
   void _onCategorySelected(String category) {
+    if (_selectedCategory == category && _searchController.text.isEmpty) return; // Ignore if already selected and not searching
     setState(() {
       _selectedCategory = category;
       _searchController.clear();
     });
-    context.read<NewsBloc>().add(FetchTopHeadlines(category: category));
+    if (_scrollController.hasClients) {
+      _scrollController.animateTo(0, duration: const Duration(milliseconds: 300), curve: Curves.easeOut);
+    }
+    context.read<NewsBloc>().add(FetchTopHeadlines(category: _selectedCategory));
   }
 
   void _onSearch(String query) {
-    if (query.trim().isNotEmpty) {
-      context.read<NewsBloc>().add(SearchNews(query));
-    } else {
-      context.read<NewsBloc>().add(FetchTopHeadlines(category: _selectedCategory));
-    }
+    if (_debounce?.isActive ?? false) _debounce?.cancel();
+    _debounce = Timer(const Duration(milliseconds: 600), () {
+      if (query.trim().isNotEmpty) {
+        if (_scrollController.hasClients) {
+          _scrollController.animateTo(0, duration: const Duration(milliseconds: 300), curve: Curves.easeOut);
+        }
+        context.read<NewsBloc>().add(SearchNews(query));
+      } else {
+        context.read<NewsBloc>().add(FetchTopHeadlines(category: _selectedCategory));
+      }
+    });
   }
 
   @override
   void dispose() {
+    _debounce?.cancel();
     _searchController.dispose();
+    _scrollController.dispose();
     super.dispose();
   }
 
@@ -97,6 +112,7 @@ class _NewsPageState extends State<NewsPage> {
                     ),
                     child: TextField(
                       controller: _searchController,
+                      onChanged: _onSearch,
                       onSubmitted: _onSearch,
                       textInputAction: TextInputAction.search,
                       style: TextStyle(fontSize: 14.sp),
@@ -138,9 +154,14 @@ class _NewsPageState extends State<NewsPage> {
                     final articles = state.articles;
                     return RefreshIndicator(
                       onRefresh: () async {
-                         context.read<NewsBloc>().add(FetchTopHeadlines(category: _selectedCategory));
+                         if (_searchController.text.trim().isNotEmpty) {
+                           context.read<NewsBloc>().add(SearchNews(_searchController.text.trim()));
+                         } else {
+                           context.read<NewsBloc>().add(FetchTopHeadlines(category: _selectedCategory));
+                         }
                       },
                       child: ListView.builder(
+                        controller: _scrollController,
                         padding: EdgeInsets.symmetric(horizontal: 20.w),
                         itemCount: articles.length,
                         itemBuilder: (context, index) {
