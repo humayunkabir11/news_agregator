@@ -25,13 +25,13 @@ class ArticleModel extends ArticleEntity {
   final String modelContent;
 
   const ArticleModel({
-    required this.modelTitle,
-    required this.modelDescription,
-    required this.modelUrl,
-    required this.modelUrlToImage,
-    required this.modelPublishedAt,
-    required this.modelSourceName,
-    required this.modelContent,
+    this.modelTitle = '',
+    this.modelDescription = '',
+    this.modelUrl = '',
+    this.modelUrlToImage = '',
+    this.modelPublishedAt = '',
+    this.modelSourceName = '',
+    this.modelContent = '',
   }) : super(
           title: modelTitle,
           description: modelDescription,

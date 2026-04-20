@@ -10,13 +10,13 @@ class ArticleEntity extends Equatable {
   final String content;
 
   const ArticleEntity({
-    required this.title,
-    required this.description,
-    required this.url,
-    required this.urlToImage,
-    required this.publishedAt,
-    required this.sourceName,
-    required this.content,
+    this.title = '',
+    this.description = '',
+    this.url = '',
+    this.urlToImage = '',
+    this.publishedAt = '',
+    this.sourceName = '',
+    this.content = '',
   });
 
   @override

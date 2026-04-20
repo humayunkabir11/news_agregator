@@ -45,10 +45,10 @@ class ArticleDetailPage extends StatelessWidget {
                       ? CachedNetworkImage(
                           imageUrl: article.urlToImage,
                           fit: BoxFit.cover,
-                          placeholder: (context, url) => Container(color: Colors.grey[200]),
-                          errorWidget: (context, url, error) => Container(color: Colors.grey[200], child: const Icon(Icons.broken_image)),
+                          placeholder: (context, url) => Container(color: Colors.grey.shade200),
+                          errorWidget: (context, url, error) => Container(color: Colors.grey.shade200, child: const Icon(Icons.broken_image)),
                         )
-                      : Container(color: Colors.grey[200], child: const Icon(Icons.image, size: 50)),
+                      : Container(color: Colors.grey.shade200, child: const Icon(Icons.image, size: 50)),
                   // Gradient dark overlay for better text visibility (if we had text on image)
                   Container(
                     decoration: BoxDecoration(

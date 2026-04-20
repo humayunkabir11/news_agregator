@@ -51,19 +51,19 @@ class ArticleCard extends StatelessWidget {
                       fit: BoxFit.cover,
                       placeholder: (context, url) => Container(
                         height: 180.h,
-                        color: Colors.grey[200],
+                        color: Colors.grey.shade200,
                         child: const Center(child: CircularProgressIndicator()),
                       ),
                       errorWidget: (context, url, error) => Container(
                         height: 180.h,
-                        color: Colors.grey[200],
+                        color: Colors.grey.shade200,
                         child: const Icon(Icons.broken_image, color: Colors.grey),
                       ),
                     )
                   : Container(
                       height: 180.h,
                       width: double.infinity,
-                      color: Colors.grey[200],
+                      color: Colors.grey.shade200,
                       child: const Icon(Icons.image, color: Colors.grey),
                     ),
             ),
@@ -95,7 +95,7 @@ class ArticleCard extends StatelessWidget {
                         formattedDate,
                         style: TextStyle(
                           fontSize: 10.sp,
-                          color: Colors.grey[600],
+                          color: Colors.grey.shade600,
                         ),
                       ),
                     ],
@@ -119,7 +119,7 @@ class ArticleCard extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                       fontSize: 12.sp,
-                      color: Colors.grey[600],
+                      color: Colors.grey.shade600,
                       height: 1.4,
                     ),
                   ),

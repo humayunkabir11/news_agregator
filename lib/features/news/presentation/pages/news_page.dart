@@ -118,7 +118,7 @@ class _NewsPageState extends State<NewsPage> {
                       style: TextStyle(fontSize: 14.sp),
                       decoration: InputDecoration(
                         hintText: "Search news...",
-                        hintStyle: TextStyle(color: Colors.grey[400]),
+                        hintStyle: TextStyle(color: Colors.grey.shade400),
                         prefixIcon: const Icon(Icons.search, color: Colors.grey),
                         border: InputBorder.none,
                         contentPadding: EdgeInsets.symmetric(vertical: 15.h),
