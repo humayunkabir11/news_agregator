@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../core/custom_assets/assets.gen.dart';
+
 
 class MainPage extends StatefulWidget {
   final StatefulNavigationShell navigationShell;
@@ -18,10 +18,10 @@ class _MainPageState extends State<MainPage> {
   int _currentIndex = 0;
 
   final _navItems = [
-    {"label": "Home", "icon":Icon(Icons.home)},
-    {"label": "Chat", "icon": Icon(Icons.message)},
-    {"label": "Cart", "icon": Icon(Icons.shopping_cart)},
-    {"label": "Profile", "icon": Icon(Icons.person)},
+    {"label": "Home", "icon": Icon(Icons.home)},
+    {"label": "Chat", "icon": Icon(Icons.home)},
+    {"label": "Cart", "icon": Icon(Icons.home)},
+    {"label": "Profile", "icon": Icon(Icons.home)},
   ];
 
   void _onTap(int index) {
