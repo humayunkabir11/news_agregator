@@ -18,13 +18,6 @@ Future<void> initDependencies() async {
   sl.registerLazySingleton<ApiClient>(
     () => ApiClient(
       baseUrl: ApiEndpoint.newsBaseUrl,
-      onLogout: () async {
-        await sl<SecureStorageService>().deleteAll();
-        await sl<SharedPrefService>().clear();
-      },
-      getToken: () {
-        return sl<SecureStorageService>().read('accessToken');
-      },
     ),
   );
 

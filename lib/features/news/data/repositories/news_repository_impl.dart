@@ -28,8 +28,10 @@ class NewsRepositoryImpl implements NewsRepository {
             localDataSource.cacheTopHeadlines(remoteArticles);
         }
         return right(remoteArticles);
-      } on ServerException {
+      } on ServerException catch(e) {
         return left(Failure(message: 'An error occurred communicating with the server'));
+      } catch (e) {
+        return left(Failure(message: 'An unexpected error occurred: $e'));
       }
     } else {
       // Offline mode: Fetch from local cache if available and category is general (as we only cache general to avoid mixups)
@@ -57,6 +59,8 @@ class NewsRepositoryImpl implements NewsRepository {
         return right(remoteArticles);
       } on ServerException {
         return left(Failure(message: 'An error occurred communicating with the server'));
+      } catch (e) {
+        return left(Failure(message: 'An unexpected error occurred: $e'));
       }
     } else {
       return left(Failure(message: 'No internet connection.'));

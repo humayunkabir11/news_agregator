@@ -11,19 +11,28 @@ class NewsLocalDataSourceImpl implements NewsLocalDataSource {
 
   @override
   Future<void> cacheTopHeadlines(List<ArticleModel> articles) async {
-    final box = await Hive.openBox<ArticleModel>(boxName);
-    await box.clear(); // Clear old cache
-    for (var article in articles) {
-      // Only cache valid articles to prevent messy offline UI
-      if (article.modelTitle.isNotEmpty && article.modelTitle != '[Removed]' && article.modelTitle != 'No Title') {
-         await box.add(article);
+    try {
+      final box = await Hive.openBox<ArticleModel>(boxName);
+      await box.clear();
+      for (var article in articles) {
+        if (article.modelTitle.isNotEmpty && article.modelTitle != '[Removed]' && article.modelTitle != 'No Title') {
+           await box.add(article);
+        }
       }
+    } catch (e) {
+      // Schema changed or corrupted, nuke it
+      await Hive.deleteBoxFromDisk(boxName);
     }
   }
 
   @override
   Future<List<ArticleModel>> getCachedTopHeadlines() async {
-    final box = await Hive.openBox<ArticleModel>(boxName);
-    return box.values.toList();
+    try {
+      final box = await Hive.openBox<ArticleModel>(boxName);
+      return box.values.toList();
+    } catch (e) {
+      await Hive.deleteBoxFromDisk(boxName);
+      return [];
+    }
   }
 }

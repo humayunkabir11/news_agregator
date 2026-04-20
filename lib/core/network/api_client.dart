@@ -10,8 +10,7 @@ class ApiClient {
 
   ApiClient({
     required String baseUrl,
-    required Future<String?> Function() getToken,
-    required void Function() onLogout,
+
   }) {
     dio = Dio(
       BaseOptions(

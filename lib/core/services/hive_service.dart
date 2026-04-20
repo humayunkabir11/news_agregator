@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 
-
+/*
 class HiveService extends GetxService {
   static HiveService get to => Get.find();
 
@@ -74,4 +74,4 @@ class HiveService extends GetxService {
     }
     return _boxes[boxName] as Box<T>;
   }
-}
+}*/

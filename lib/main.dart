@@ -65,7 +65,7 @@ class MyApp extends StatelessWidget {
       builder: (context, child) {
         return MultiBlocProvider(
           providers: [
-            BlocProvider.value(value: sl<NewsBloc>()),
+            BlocProvider(create: (_) => sl<NewsBloc>()),
           ],
           child: MediaQuery(
             data: MediaQuery.of(
