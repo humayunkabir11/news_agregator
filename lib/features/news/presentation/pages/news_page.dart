@@ -5,7 +5,10 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/config/routes/route_path.dart';
 import '../bloc/news_bloc.dart';
 import '../bloc/news_event.dart';
-
+import '../bloc/news_state.dart';
+import '../widgets/article_card.dart';
+import '../widgets/category_chips.dart';
+import '../widgets/news_shimmer.dart';
 
 class NewsPage extends StatefulWidget {
   const NewsPage({super.key});
@@ -116,7 +119,79 @@ class _NewsPageState extends State<NewsPage> {
               ),
             ),
             
+            // Categories
+            CategoryChips(
+              categories: _categories,
+              selectedCategory: _selectedCategory,
+              onSelected: _onCategorySelected,
+            ),
+            SizedBox(height: 20.h),
 
+            // Articles List
+            Expanded(
+              child: BlocBuilder<NewsBloc, NewsState>(
+                builder: (context, state) {
+                  if (state is NewsLoading || state is NewsInitial) {
+                    return const NewsShimmer();
+                  } else if (state is NewsLoaded) {
+                    final articles = state.articles;
+                    return RefreshIndicator(
+                      onRefresh: () async {
+                         context.read<NewsBloc>().add(FetchTopHeadlines(category: _selectedCategory));
+                      },
+                      child: ListView.builder(
+                        padding: EdgeInsets.symmetric(horizontal: 20.w),
+                        itemCount: articles.length,
+                        itemBuilder: (context, index) {
+                          return ArticleCard(
+                            article: articles[index],
+                            onTap: () {
+                              context.push(RoutePath.articleDetailPagePath, extra: articles[index]);
+                            },
+                          );
+                        },
+                      ),
+                    );
+                  } else if (state is NewsEmpty) {
+                    return Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Icons.feed_outlined, size: 64.sp, color: Colors.grey[400]),
+                          SizedBox(height: 16.h),
+                          Text(state.message, style: TextStyle(color: Colors.grey[600], fontSize: 16.sp)),
+                        ],
+                      ),
+                    );
+                  } else if (state is NewsError) {
+                    return Center(
+                      child: Padding(
+                        padding: EdgeInsets.all(20.w),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.error_outline, size: 64.sp, color: Colors.red[300]),
+                            SizedBox(height: 16.h),
+                            Text(
+                              state.message,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(color: Colors.grey[800], fontSize: 16.sp),
+                            ),
+                            SizedBox(height: 20.h),
+                            ElevatedButton(
+                              onPressed: () => _onCategorySelected(_selectedCategory),
+                              style: ElevatedButton.styleFrom(backgroundColor: const Color(0xffE54B4B)),
+                              child: const Text("Retry", style: TextStyle(color: Colors.white)),
+                            )
+                          ],
+                        ),
+                      ),
+                    );
+                  }
+                  return const SizedBox.shrink();
+                },
+              ),
+            ),
           ],
         ),
       ),

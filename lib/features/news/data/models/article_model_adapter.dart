@@ -15,10 +15,10 @@ class ArticleModelAdapter extends TypeAdapter<ArticleModel> {
       modelTitle: fields[0] as String,
       modelDescription: fields[1] as String,
       modelUrl: fields[2] as String,
-      modelUrlToImage: fields[3] as String,
-      modelPublishedAt: fields[4] as String,
-      modelSourceName: fields[5] as String,
-      modelContent: fields[6] as String,
+      modelUrlToImage: (fields[3] as String?) ?? '',
+      modelPublishedAt: (fields[4] as String?) ?? '',
+      modelSourceName: (fields[5] as String?) ?? '',
+      modelContent: (fields[6] as String?) ?? 'No extra content available.',
     );
   }
 

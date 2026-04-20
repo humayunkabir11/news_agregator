@@ -13,7 +13,6 @@ import 'core/utils/dev_logs.dart';
 import 'features/news/presentation/bloc/news_bloc.dart';
 
 
-
 void main() async {
   await runZonedGuarded<Future<void>>(
     () async {

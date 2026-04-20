@@ -18,10 +18,10 @@ class _MainPageState extends State<MainPage> {
   int _currentIndex = 0;
 
   final _navItems = [
-    {"label": "Home", "icon": Icon(Icons.home)},
-    {"label": "Chat", "icon": Icon(Icons.home)},
-    {"label": "Cart", "icon": Icon(Icons.home)},
-    {"label": "Profile", "icon": Icon(Icons.home)},
+    {"label": "News", "icon": Icons.home},
+    {"label": "Chat", "icon": Icons.chat},
+    {"label": "Cart", "icon": Icons.shopping_cart},
+    {"label": "Profile", "icon": Icons.person},
   ];
 
   void _onTap(int index) {
@@ -79,13 +79,10 @@ class CustomBottomNav extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                items[index]['icon'].svg(
-                  height: 28.sp,
-                  width: 28.sp,
-                  colorFilter: ColorFilter.mode(
-                    isActive ? const Color(0xffE54B4B) : const Color(0xFF797979),
-                    BlendMode.srcIn,
-                  ),
+                Icon(
+                  items[index]['icon'],
+                  size: 28,
+                  color: isActive ? const Color(0xffE54B4B) : const Color(0xFF797979),
                 ),
                 SizedBox(height: 6.h),
                 Text(
