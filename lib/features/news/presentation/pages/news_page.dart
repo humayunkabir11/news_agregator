@@ -179,9 +179,9 @@ class _NewsPageState extends State<NewsPage> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Icon(Icons.feed_outlined, size: 64.sp, color: Colors.grey[400]),
+                          Icon(Icons.feed_outlined, size: 64.sp, color: Colors.grey.shade400),
                           SizedBox(height: 16.h),
-                          Text(state.message, style: TextStyle(color: Colors.grey[600], fontSize: 16.sp)),
+                          Text(state.message, style: TextStyle(color: Colors.grey.shade600, fontSize: 16.sp)),
                         ],
                       ),
                     );
@@ -197,7 +197,7 @@ class _NewsPageState extends State<NewsPage> {
                             Text(
                               state.message,
                               textAlign: TextAlign.center,
-                              style: TextStyle(color: Colors.grey[800], fontSize: 16.sp),
+                              style: TextStyle(color: Colors.grey.shade800, fontSize: 16.sp),
                             ),
                             SizedBox(height: 20.h),
                             ElevatedButton(

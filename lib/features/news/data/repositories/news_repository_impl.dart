@@ -29,7 +29,7 @@ class NewsRepositoryImpl implements NewsRepository {
         }
         return right(remoteArticles);
       } on ServerException catch(e) {
-        return left(Failure(message: 'An error occurred communicating with the server'));
+        return left(Failure(message: 'Please use an apikey'));
       } catch (e) {
         return left(Failure(message: 'An unexpected error occurred: $e'));
       }
@@ -58,7 +58,7 @@ class NewsRepositoryImpl implements NewsRepository {
         final remoteArticles = await remoteDataSource.searchNews(query);
         return right(remoteArticles);
       } on ServerException {
-        return left(Failure(message: 'An error occurred communicating with the server'));
+        return left(Failure(message: 'Please use an apikey'));
       } catch (e) {
         return left(Failure(message: 'An unexpected error occurred: $e'));
       }
