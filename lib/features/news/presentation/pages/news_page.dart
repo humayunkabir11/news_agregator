@@ -58,7 +58,7 @@ class _NewsPageState extends State<NewsPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Header & Search
+            ///--------------------- Header & Search
             Padding(
               padding: EdgeInsets.all(20.w),
               child: Column(
@@ -98,6 +98,7 @@ class _NewsPageState extends State<NewsPage> {
                     child: TextField(
                       controller: _searchController,
                       onSubmitted: _onSearch,
+                      textInputAction: TextInputAction.search,
                       style: TextStyle(fontSize: 14.sp),
                       decoration: InputDecoration(
                         hintText: "Search news...",
